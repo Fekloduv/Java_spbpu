@@ -1,12 +1,16 @@
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 public class Main {
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Нет аргументов командной строки.");
-        } else {
-            System.out.println("Аргументы командной строки:");
-            for (int i = 0; i < args.length; i++) {
-                System.out.println("Аргумент " + (i + 1) + ": " + args[i]);
-            }
-        }
+        Stack<Integer> stack = new Stack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+        stack.printStack();
+        stack.pop();
+        System.out.println("The top stack's element after deleting: " + stack.peek());
     }
 }
