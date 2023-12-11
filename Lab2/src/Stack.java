@@ -1,73 +1,51 @@
-public class Stack {
-    private int maxSize;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+public class Stack<T>{
+    private ArrayList<T> data;
     private int top;
-    private int[] stackArray;
 
-    public Stack(int size) {
-        maxSize = size;
-        stackArray = new int[maxSize];
-        top = -1;
+    public Stack() {
+        this.data = new ArrayList<>();
+        this.top = 0;
     }
 
-    public void push(int value) {
-        if (top < maxSize - 1) {
-            stackArray[++top] = value;
-            System.out.println("Pushed " + value + " to the stack.");
+    public void push(T element) {
+        data.add(element);
+        top += 1;
+    }
+
+    public T pop() {
+        if (top == 0) {
+            System.err.println("The stack is empty.");
+            throw new NoSuchElementException("The stack is empty.");
         } else {
-            System.out.println("Stack is full. Cannot push " + value + ".");
+            top -= 1;
+            return data.remove(top);
         }
     }
 
-    public int pop() {
-        if (!isEmpty()) {
-            int poppedValue = stackArray[top--];
-            System.out.println("Popped " + poppedValue + " from the stack.");
-            return poppedValue;
+    public T peek() {
+        if (top == 0) {
+            throw new NoSuchElementException("The stack is empty.");
         } else {
-            System.out.println("Stack is empty. Cannot pop.");
-            return -1;
+            return data.get(top - 1);
         }
     }
 
-    public int peek() {
-        if (!isEmpty()) {
-            return stackArray[top];
+    public void printStack() {
+        if (top == 0) {
+            System.out.println("The stack is empty.");
         } else {
-            System.out.println("Stack is empty. Cannot peek.");
-            return -1;
+            System.out.print("The stack is ");
+            for (int i = 0; i < top; i++) {
+                try {
+                    System.out.print(data.get(i) + " ");
+                } catch (IndexOutOfBoundsException e) {
+                    System.err.println("Failed Entering of Element: " + e.getMessage());
+                }
+            }
+            System.out.println();
         }
-    }
-
-    public boolean isEmpty() {
-        return top == -1;
-    }
-
-    public boolean isFull() {
-        return top == maxSize - 1;
-    }
-
-    public static void main(String[] args) {
-        Stack stack = new Stack(5);
-
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        stack.push(4);
-        stack.push(5);
-        stack.push(6);
-
-        System.out.println("Top of the stack: " + stack.peek());
-
-        stack.pop();
-        stack.pop();
-        stack.pop();
-
-        System.out.println("Top of the stack after popping: " + stack.peek());
-
-        stack.pop();
-        stack.pop();
-        stack.pop();
-
-        System.out.println("Is the stack empty? " + stack.isEmpty());
     }
 }
